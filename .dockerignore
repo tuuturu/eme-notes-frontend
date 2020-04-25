@@ -1,7 +1,13 @@
-/.idea/
-/node_modules/
+*
 
-.env
-.gitignore
-makefile
-README.md
+!./babel.config.js
+!./.browserslistrc
+!./.eslintrc.js
+!./.prettierrc.yaml
+
+!./src
+!./public
+!./scripts
+
+!./package.json
+!./package-lock.json
