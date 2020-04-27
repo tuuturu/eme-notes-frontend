@@ -1,4 +1,5 @@
 
 
 run:
-	npm run serve
+	@docker-compose up -d
+	@npm run serve
