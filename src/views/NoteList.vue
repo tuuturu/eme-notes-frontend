@@ -12,7 +12,7 @@
 		</ol>
 
 		<div class="action-container">
-			<Button class="link" v-if="selectMode" @click="deleteNotes">
+			<Button class="link delete" v-if="selectMode" @click="deleteNotes">
 				Delete
 			</Button>
 			<a v-else class="secondary" @click="$router.push({ name: 'CreateNote' })">
@@ -132,5 +132,10 @@ button.link {
 	background-color: transparent;
 
 	font-size: 16pt;
+}
+.delete {
+	color: red;
+
+	font-weight: bold;
 }
 </style>
