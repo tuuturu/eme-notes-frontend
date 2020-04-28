@@ -46,7 +46,7 @@ export default {
 				if (!this.note) this.$router.push({ name: 'NoteList' })
 				break
 			default:
-				console.log('Unable to something')
+				console.error(`Unable to handle ${name}`)
 		}
 	}
 }
