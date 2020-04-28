@@ -7,30 +7,47 @@
 <script>
 import Note from '@/models/note'
 
-const SAVE_TIMEOUT_MS = 200
+const SAVE_TIMEOUT_MS = 500
 
 export default {
 	name: 'Note',
 	data: () => ({
 		saveTimeout: null,
-		note: new Note()
+		note: null
 	}),
 	methods: {
 		autosave() {
 			if (this.saveTimeout) clearTimeout(this.saveTimeout)
 
 			this.saveTimeout = setTimeout(async () => {
-				this.note = await this.$store.dispatch('notes/saveNote', this.note)
+				const savedNote = await this.$store.dispatch(
+					'notes/saveNote',
+					this.note
+				)
+
+				this.note.id = savedNote.id
+
+				this.saveTimeout = null
 			}, SAVE_TIMEOUT_MS)
 		}
 	},
 	created() {
 		const name = this.$route.name
 
-		if (name === 'EditNote')
-			this.note = this.$store.getters['notes/getNote'](this.$route.params.id)
-		else if (name === 'LatestNote')
-			this.note = this.$store.getters['notes/getLatestNote']
+		switch (name) {
+			case 'CreateNote':
+				this.note = new Note()
+				break
+			case 'EditNote':
+				this.note = this.$store.getters['notes/getNote'](this.$route.params.id)
+				break
+			case 'LatestNote':
+				this.note = this.$store.getters['notes/getLatestNote']
+				if (!this.note) this.$router.push({ name: 'NoteList' })
+				break
+			default:
+				console.log('Unable to something')
+		}
 	}
 }
 </script>

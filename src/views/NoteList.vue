@@ -15,7 +15,9 @@
 			<Button class="link" v-if="selectMode" @click="deleteNotes">
 				Delete
 			</Button>
-			<a v-else class="secondary" href="/#/new">New</a>
+			<a v-else class="secondary" @click="$router.push({ name: 'CreateNote' })">
+				New
+			</a>
 		</div>
 	</div>
 </template>
@@ -41,6 +43,9 @@ export default {
 		longpressTimer: null,
 		selectedNotes: []
 	}),
+	created() {
+		this.$store.dispatch('notes/refreshNotes')
+	},
 	methods: {
 		onMouseDown(id) {
 			this.longpressTimer = setTimeout(() => {
@@ -110,6 +115,10 @@ li {
 
 	display: flex;
 	justify-content: flex-end;
+
+	* {
+		cursor: pointer;
+	}
 }
 
 a.secondary {

@@ -9,6 +9,8 @@ const axios = Axios.create({
 })
 
 const state = () => ({
+	notesFetched: false,
+
 	notes: []
 })
 
@@ -45,7 +47,9 @@ const getters = {
 }
 
 const actions = {
-	async refreshNotes({ commit }) {
+	async refreshNotes({ commit, state }) {
+		if (state.notesFetched) return
+
 		const { data } = await axios.request({
 			url: '/notes',
 			method: 'get'
@@ -53,13 +57,15 @@ const actions = {
 
 		commit('notes', data)
 	},
-	async saveNote(context, note) {
+	async saveNote({ commit }, note) {
 		let method = 'post'
 		let url = '/notes'
+		let commitFn = 'addNote'
 
 		if (note.id) {
 			method = 'patch'
 			url += `/${note.id}`
+			commitFn = 'updateNote'
 		}
 
 		const { data } = await axios.request({
@@ -68,13 +74,17 @@ const actions = {
 			data: note
 		})
 
+		commit(commitFn, data)
+
 		return data
 	},
-	async deleteNote(context, { id }) {
+	async deleteNote({ commit }, { id }) {
 		await axios.request({
-			url: `/${id}`,
+			url: `/notes/${id}`,
 			method: 'delete'
 		})
+
+		commit('deleteNoteById', id)
 	}
 }
 
