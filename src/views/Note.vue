@@ -13,7 +13,7 @@ export default {
 	name: 'Note',
 	data: () => ({
 		saveTimeout: null,
-		note: null
+		note: new Note()
 	}),
 	methods: {
 		autosave() {
@@ -31,19 +31,20 @@ export default {
 			}, SAVE_TIMEOUT_MS)
 		}
 	},
-	created() {
+	async created() {
 		const name = this.$route.name
+
+		await this.$store.dispatch('notes/refreshNotes')
 
 		switch (name) {
 			case 'CreateNote':
-				this.note = new Note()
 				break
 			case 'EditNote':
 				this.note = this.$store.getters['notes/getNote'](this.$route.params.id)
 				break
 			case 'LatestNote':
 				this.note = this.$store.getters['notes/getLatestNote']
-				if (!this.note) this.$router.push({ name: 'NoteList' })
+				if (!this.note) await this.$router.push({ name: 'NoteList' })
 				break
 			default:
 				console.error(`Unable to handle ${name}`)
