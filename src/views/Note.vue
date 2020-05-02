@@ -1,16 +1,26 @@
 <template>
 	<div class="Note">
-		<textarea aria-label="note body" v-model="note.body" @input="autosave" />
+		<div class="menu">
+			<IconMenu @click="$router.push('/all')" />
+		</div>
+		<textarea
+			ref="txtBody"
+			aria-label="note body"
+			v-model="note.body"
+			@input="autosave"
+		/>
 	</div>
 </template>
 
 <script>
 import Note from '@/models/note'
+import IconMenu from '@/components/IconMenu'
 
 const SAVE_TIMEOUT_MS = 500
 
 export default {
 	name: 'Note',
+	components: { IconMenu },
 	data: () => ({
 		saveTimeout: null,
 		note: new Note()
@@ -49,6 +59,9 @@ export default {
 			default:
 				console.error(`Unable to handle ${name}`)
 		}
+	},
+	mounted() {
+		this.$refs.txtBody.focus()
 	}
 }
 </script>
@@ -58,6 +71,26 @@ export default {
 
 .Note {
 	overflow: hidden;
+}
+
+.menu {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+
+	display: flex;
+	justify-content: flex-end;
+
+	padding: 1em;
+}
+
+.IconMenu {
+	width: 36px;
+	height: 36px;
+
+	color: black;
+
+	cursor: pointer;
 }
 
 textarea {
