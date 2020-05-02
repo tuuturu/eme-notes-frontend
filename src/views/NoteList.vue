@@ -15,9 +15,7 @@
 			<Button class="link delete" v-if="selectMode" @click="deleteNotes">
 				Delete
 			</Button>
-			<a v-else class="secondary" @click="$router.push({ name: 'CreateNote' })">
-				New
-			</a>
+			<IconNewNote v-else @click="$router.push({ name: 'CreateNote' })" />
 		</div>
 	</div>
 </template>
@@ -26,10 +24,11 @@
 import { mapState } from 'vuex'
 import NoteCard from '@/components/NoteCard'
 import sorters from '@/utils/sorters'
+import IconNewNote from '@/components/IconNewNote'
 
 export default {
 	name: 'NoteList',
-	components: { NoteCard },
+	components: { IconNewNote, NoteCard },
 	computed: {
 		...mapState('notes', ['notes']),
 		sorted_notes() {
@@ -111,7 +110,7 @@ li {
 	bottom: 0;
 
 	width: 100%;
-	padding: 2em;
+	padding: 1em;
 
 	display: flex;
 	justify-content: flex-end;
@@ -119,12 +118,6 @@ li {
 	* {
 		cursor: pointer;
 	}
-}
-
-a.secondary {
-	text-decoration: none;
-
-	color: $primary;
 }
 
 button.link {
@@ -137,5 +130,12 @@ button.link {
 	color: red;
 
 	font-weight: bold;
+}
+
+.IconNewNote {
+	width: 48px;
+	height: 48px;
+
+	color: $primary;
 }
 </style>
