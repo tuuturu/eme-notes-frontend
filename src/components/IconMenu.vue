@@ -9,9 +9,10 @@
 		v-on="$listeners"
 	>
 		<title>{{ alt }}</title>
-		<rect width="24" height="4" fill="currentColor" />
-		<rect y="10" width="24" height="4" fill="currentColor" />
-		<rect y="20" width="24" height="4" fill="currentColor" />
+		<rect width="10" height="10" fill="currentColor" />
+		<rect x="14" width="10" height="10" fill="currentColor" />
+		<rect x="14" y="14" width="10" height="10" fill="currentColor" />
+		<rect y="14" width="10" height="10" fill="currentColor" />
 	</svg>
 </template>
 
