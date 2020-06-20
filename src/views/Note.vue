@@ -95,7 +95,7 @@ export default {
 
 textarea {
 	width: 100%;
-	height: 100vh;
+	height: calc(100vh - 36px - 2em);
 
 	resize: none;
 	border: 0;
